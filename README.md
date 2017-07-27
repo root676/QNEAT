@@ -7,7 +7,7 @@ be provided at the corresponding [ResearchGate](https://www.researchgate.net/pro
 
 ### Currently planned algorithms
 - **Shortest Path** (Dijkstra) between coordinates
-- **Shortest Path **(Dijkstra) between two points in layers
+- **Shortest Path**(Dijkstra) between two points in layers
 - **Isochrone Area** calculation with advanced interpolation techniques
 - **Origin-Destination** Matrix between all points of a layer.
 
