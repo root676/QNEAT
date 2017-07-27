@@ -5,7 +5,7 @@ in the Field of Network Analysis. In order to assure usability and consitency in
 is not designed as a simple GUI extension but as a downloadable extension of the toolbox algorithms. Further information will
 be provided at the corresponding [ResearchGate](https://www.researchgate.net/project/Design-of-advanced-network-analysis-algorithms-for-the-QGIS-processing-library) project-website.
 
-###Currently planned algorithms
+### Currently planned algorithms
 - Simple Path (Dijkstra) between coordinates
 - Shortest Path (Dijkstra) between two points in layers
 - Isochrone Area calculation with advanced interpolation techniques
