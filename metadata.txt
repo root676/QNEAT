@@ -1,0 +1,15 @@
+[general]
+name=QNEAT
+description=Qgis Network Analysis Tools
+category=Analysis
+version=1.0
+qgisMinimumVersion=2.0
+
+author=Clemens Raffler
+email=clemens.raffler@gmail.com
+
+tags=analysis,processing
+
+homepage=http://qgis.org
+tracker=https://hub.qgis.org/projects/QGIS/issues
+repository=https://github.com/qgis/QGIS

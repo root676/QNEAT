@@ -1,0 +1,21 @@
+origin_point_layer
+graph_layer
+
+iso_distance = 2000
+iso_steps = [1750,1500,1250,1000,750,500,250]
+iso_step = 500
+
+tin_export_path = "S:/GIS_Workbench_S/script_output/interpolation.asc"
+
+polygonize_export_basepath = "S:/GIS_Workbench_S/script_output/polygonize/"
+polygonize_export_path = "S:/GIS_Workbench_S/script_output/polygonize/gdal_polygonized_raster.shp"
+
+
+TO DO:
+	Move Functions of ALL Networkanalysis algs to QneatCalculator
+	
+	function to assure all input is in same crs - else report to console [FEATURE: Reproject]
+	
+	1 Result variable (Regardles of Result layer)
+	
+	one normal class and per alg new classes that inherit from the baseclass
