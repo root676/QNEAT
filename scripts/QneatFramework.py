@@ -116,7 +116,8 @@ class QneatIsochroneCalculator(QneatBaseCalculator):
 		self.output_polygons = output_polygon_path
 	
 	
-	def calcIsoPoints(self):
+	def calcIsoPoints(self)
+		for current_point in self.points:
 		self.iso_points = 1
 		return self.iso_points	
 		
