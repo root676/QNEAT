@@ -12,3 +12,5 @@ be provided at the corresponding [ResearchGate](https://www.researchgate.net/pro
 - **Origin-Destination** Matrix between all points of a layer.
 
 At a later project stage it is also planned to implement direction-dependent routing.
+
+**Please note that the current code in this repository is not yet properly working and containes prototypes that were tested in the QGIS Python console.**
