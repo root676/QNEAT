@@ -13,4 +13,6 @@ be provided at the corresponding [ResearchGate](https://www.researchgate.net/pro
 
 At a later project stage it is also planned to implement direction-dependent routing.
 
-**Please note that the current code in this repository is not yet properly working and containes prototypes that were tested in the QGIS Python console.**
+**Please note that the current code in this repository is not yet properly working and containes prototypes that were tested in the QGIS Python console.** 
+
+**Due to the fact that I work full time, updates to the repository may be not that frequently.**
