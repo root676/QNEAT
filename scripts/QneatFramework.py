@@ -111,18 +111,20 @@ class QneatIsochroneCalculator(QneatBaseCalculator):
 	
 	def __init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection, iso_steps, output_interpolation_path, output_polygon_path):
 		QneatBaseCalculator.__init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection)
-		self.iso_steps = iso_steps
+		self.iso_steps = iso_steps #deal with outer sections in polygonization of multiple ISOs (one additional iso range that can be cut off)
 		self.output_interpolation = output_interpolation_path
 		self.output_polygons = output_polygon_path
 	
 	
-	def calcIsoPoints(self)
+	def calcIsoPoints(self):
+		# [MAP] list of Points from input-layer --> dijkstra()--> list of pointlists
+		# [ListComprehension] take list of pointlists and min merge them into one array
+		#(= no for loop)
 		for current_point in self.points:
-		self.iso_points = 1
-		return self.iso_points	
 		
 		
 	def interpolateIsoPoints(self):	
+		#calc TIN Interpolation
 		return 0
 	
 	
