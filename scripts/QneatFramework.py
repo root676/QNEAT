@@ -121,10 +121,10 @@ class QneatIsochroneCalculator(QneatBaseCalculator):
 		# [ListComprehension] take list of pointlists and min merge them into one array
 		#(= no for loop)
 		for current_point in self.points:
-		
-		
+			return 0
+			
 	def interpolateIsoPoints(self):	
-		#calc TIN Interpolation
+		#calc TIN Interpolation 
 		return 0
 	
 	
