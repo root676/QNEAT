@@ -10,6 +10,13 @@ import gdal, ogr
 
 class QneatBaseCalculator():
 	
+	
+	"""
+	QNEAT base-class:
+	Provides basic logic for more advanced network analysis algorithms
+	"""
+	
+	
 	def __init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection):
 		#init datasets
 		self.input_network = input_network
@@ -54,6 +61,10 @@ class QneatBaseCalculator():
 		#get the graph
 		self.log("Build the graph")
 		self.network = builder.graph()
+		
+	def calcDijkstra(self, startPoint):
+		"""Calculates Dijkstra on whole network beginning from one startPoint. Returns a tuple of TreeId-Array and Cost-Array that match up with their indices ([tree],[cost]) """
+		return QgsGraphAnalyzer.dijkstra(self.network, self.network.findVertex(startPoint),0)
 		
 	
 	def checkComputabilityStatus(self):
@@ -116,12 +127,14 @@ class QneatIsochroneCalculator(QneatBaseCalculator):
 		self.output_polygons = output_polygon_path
 	
 	
-	def calcIsoPoints(self):
+	def minMergeIsoPoints(self):
 		# [MAP] list of Points from input-layer --> dijkstra()--> list of pointlists
 		# [ListComprehension] take list of pointlists and min merge them into one array
 		#(= no for loop)
 		for current_point in self.points:
 			return 0
+			
+			
 			
 	def interpolateIsoPoints(self):	
 		#calc TIN Interpolation 
