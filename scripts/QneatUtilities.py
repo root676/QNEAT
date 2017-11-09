@@ -89,5 +89,9 @@ def getMultiGeometryAsList(vlayer):
 
 def getSingleGeometryAsList(vlayer):
     list_multigeom = getMultiGeometryAsList(vlayer)
+    list_singlegeom = []
     for geom in list_multigeom:
+        extracted_geom = extractGeometryAsSingle(geom)
+        list_singlegeom.extend(extracted_geom)
+    return list_singlegeom
         
