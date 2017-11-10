@@ -31,7 +31,7 @@ class QneatBaseCalculator():
 		
 		#init direction fields
 		log("setting up network analysis parameters")
-		self.directionFieldId = input_directDirectionValue
+		self.directionFieldId = input_directionFieldId
 		self.input_directDirectionValue = input_directDirectionValue
 		self.input_reverseDirectionValue = input_reverseDirectionValue
 		self.input_bothDirectionValue = input_bothDirectionValue

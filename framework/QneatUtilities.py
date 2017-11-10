@@ -10,8 +10,9 @@ def AssignAnalysisCrs(input_network):
     AnalysisCrs = input_network.crs()
 
 def log(message):
-    QgsMessageLog.LogMessage(message)
+    QgsMessageLog.logMessage(message, "QNEAT")
     
+
 def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_geometry, list_qgsfield):
     
     #create new vector layer from self.crs
@@ -55,7 +56,7 @@ def getLayerGeometryType(vlayer):
             return QGis.WKBUnknown
     except:
         return None
-    
+
 def extractGeometryAsSingle(geom): #must be called per multigeometry object
     multiGeom = QgsGeometry()
     list_singleGeometries = []
