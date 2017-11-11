@@ -18,16 +18,16 @@ from QNEAT.framework.QneatFramework import QneatODMatrixCalculator
 
 def log(message):
     progress.setText(message)
-    util.logPanel(message)
     
     
+log("Initializing QneatODMatrixCalculator")
 QneatODMatrixCalculator(
             input_network = Input_Network_Layer,
             input_points = Input_Point_Layer,
             output_matrix= Output_Matrix_File)
-   
-log("HelloWorld")
-log("This is the QNEAT Plugin speaking!")
-log("We are now ending the algorthim")
+
+
+log("Initialization Done")
+log("Ending Algorithm")
 
 
