@@ -8,6 +8,7 @@ from PyQt4.QtCore import QVariant
 
 from QneatUtilities import *
 
+from processing.tools.dataobjects import getObjectFromUri
 
 import gdal, ogr
 
@@ -21,47 +22,70 @@ class QneatBaseCalculator():
 	"""
 	
 	
-	def __init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection):
+	def __init__(self,
+				 input_network,
+				 input_points,
+				 input_directionFieldId=None,
+				 input_directDirectionValue=None,
+				 input_reverseDirectionValue=None,
+				 input_bothDirectionValue=None, 
+				 input_defaultDirection=None):
 		#init
-		log("__init__: setting up parameters")
+		logPanel("__init__[QneatBaseCalculator]: setting up parameters")
 		#init datsets
-		log("setting up datasets")
-		self.input_network = input_network
-		self.input_points = input_points
+		logPanel("setting up datasets")
+		self.input_network = getObjectFromUri(input_network)
+		self.input_points = getObjectFromUri(input_points)
 		
-		#init direction fields
-		log("setting up network analysis parameters")
-		self.directionFieldId = input_directionFieldId
-		self.input_directDirectionValue = input_directDirectionValue
-		self.input_reverseDirectionValue = input_reverseDirectionValue
-		self.input_bothDirectionValue = input_bothDirectionValue
-		self.input_defaultDirection = input_defaultDirection
 	
 		#init computabiliyt and crs
-		log("__init__: checking computability and crs")
-		self.ComputabilityStatus = self.checkComputabilityStatus(input_network, input_points)
-		#init graph analysis
-		#direction can be added
-		log("__init__: setting up network analysis")
-		log("getting all analysis points")
-		self.list_input_points = self.input_points.getFeatures(QgsFeatureRequest().setFilterFids(self.input_points.allFeatureIds()))
-		#line director args: layer, directionFieldId, str directDirectionValue, str reverseDirectionValue, str bothDirectionValue, int defaultDirection 
-		# EXAMPLE: QgsLineVectorLayerDirector(self.input_network, -1, '', '', '', 3)
-		log("Adding direction information")
-		self.director = QgsLineVectorLayerDirector(self.input_network, self.directionFieldId, self.input_directDirectionValue, self.input_reverseDirectionValue, self.input_bothDirectionValue, self.input_defaultDirection)
-		#Use distance as cost-strategy pattern.
-		log("Setting distance as cost property")
-		self.properter = QgsDistanceArcProperter()
-		#add the properter to the QgsGraphDirector
-		self.director.addProperter(self.properter)
-		log("Setting the graph builders spatial reference")
-		self.builder = QgsGraphBuilder(self.AnalysisCrs)
-		#tell the graph-director to make the graph using the builder object and tie the start point geometry to the graph
-		log("Tying input_points to the graph")
-		self.list_tiedPoints = self.director.makeGraph(self.builder, [feature.geometry().asPoint() for feature in self.points])
-		#get the graph
-		log("Build the graph")
-		self.network = self.builder.graph()
+		logPanel("__init__: checking computability")
+		self.ComputabilityStatus = self.checkComputabilityStatus()
+		
+		if self.ComputabilityStatus == True:
+			logPanel("_init_: setting CRS")
+			self.AnalysisCrs = self.setAnalysisCrs()
+		
+			#init direction fields
+			logPanel("setting up network analysis parameters")
+			self.directedAnalysis = self.checkIfDirected((input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection))
+			if self.directedAnalysis == True:
+				logPanel("Analysis is directed")
+				logPanel("setting up Director")
+				self.director = QgsLineVectorLayerDirector(self.input_network,
+											input_directionFieldId,
+											input_directDirectionValue,
+											input_reverseDirectionValue,
+											input_bothDirectionValue,
+											input_defaultDirection)
+			else:
+				logPanel("Analysis is undirected")
+				logPanel("defaulting to normal director")
+				self.director = QgsLineVectorLayerDirector(self.input_network,
+														 -1,
+														 '',
+														 '',
+														 '',
+														 3)
+			
+			#init graph analysis
+			logPanel("__init__: setting up network analysis")
+			logPanel("getting all analysis points")
+			self.list_input_points = self.input_points.getFeatures(QgsFeatureRequest().setFilterFids(self.input_points.allFeatureIds()))
+		
+			#Use distance as cost-strategy pattern.
+			logPanel("Setting distance as cost property")
+			self.properter = QgsDistanceArcProperter()
+			#add the properter to the QgsGraphDirector
+			self.director.addProperter(self.properter)
+			logPanel("Setting the graph builders spatial reference")
+			self.builder = QgsGraphBuilder(self.AnalysisCrs)
+			#tell the graph-director to make the graph using the builder object and tie the start point geometry to the graph
+			logPanel("Tying input_points to the graph")
+			self.list_tiedPoints = self.director.makeGraph(self.builder, getListOfPoints(self.input_points))
+			#get the graph
+			logPanel("Build the graph")
+			self.network = self.builder.graph()
 		
 	def calcDijkstra(self, startPoint):
 		"""Calculates Dijkstra on whole network beginning from one startPoint. Returns a tuple of TreeId-Array and Cost-Array that match up with their indices ([tree],[cost]) """
@@ -72,21 +96,56 @@ class QneatBaseCalculator():
 		input_network_srid = self.input_network.crs().authid()
 		input_points_srid = self.input_points.crs().authid()
 		if input_network_srid == input_points_srid:
-			log("Input datasets match in spatial reference:")
-			log("NetworkCRS == PointCRS: %d == %d".format(input_network_srid, input_points_srid))
-			AssignAnalysisCrs(self.network) #if srids match, assign network crs to object as AnalysisCrs
+			logPanel("Input datasets match in spatial reference:")
+			logPanel("NetworkCRS == PointCRS: %d == %d".format(input_network_srid, input_points_srid))
 			return True 	
 		else:
-			log("Input datasets do not have the same spatial reference:")
-			log("Network-dataset: %d".format(input_network_srid))
-			log("Point-dataset: %d".format(input_points_srid))
-			log("Please reproject input datasets so that they share the same spatial reference!")
-			return False	
+			logPanel("Input datasets do not have the same spatial reference:")
+			logPanel("Network-dataset: %d".format(input_network_srid))
+			logPanel("Point-dataset: %d".format(input_points_srid))
+			logPanel("Please reproject input datasets so that they share the same spatial reference!")
+			return False
 	
+	def checkIfDirected(self, directionArgs):
+		if directionArgs.count(None) == 0:
+			return True
+		else:
+			return False
+		
+	def setAnalysisCrs(self):
+		return self.input_network.crs()
+			
+	def setNetworkDirection(self, directionArgs):	
+		if directionArgs.count(None) == 0:
+			self.directedAnalysis = True
+			self.directionFieldId, self.input_directDirectionValue, self.input_reverseDirectionValue, self.input_bothDirectionValue, self.input_defaultDirection = directionArgs
+		else:
+			self.directedAnalysis = False
+		
 class QneatIsochroneCalculator(QneatBaseCalculator):
 	
-	def __init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection, iso_steps, output_interpolation_path, output_polygon_path):
-		QneatBaseCalculator.__init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection)
+	def __init__(self,
+				input_network,
+				input_points,
+				iso_steps,
+				output_interpolation_path,
+				output_polygon_path,
+				input_directionFieldId=None,
+				input_directDirectionValue=None,
+				input_reverseDirectionValue=None,
+				input_bothDirectionValue=None,
+				input_defaultDirection=None,
+				):
+		
+		QneatBaseCalculator.__init__(self,
+									input_network,
+									input_points,
+									input_directionFieldId,
+									input_directDirectionValue,
+									input_reverseDirectionValue,
+									input_bothDirectionValue,
+									input_defaultDirection)
+		
 		self.iso_steps = iso_steps #deal with outer sections in polygonization of multiple ISOs (one additional iso range that can be cut off)
 		self.output_interpolation = output_interpolation_path
 		self.output_polygons = output_polygon_path
@@ -112,9 +171,28 @@ class QneatIsochroneCalculator(QneatBaseCalculator):
 
 class QneatODMatrixCalculator(QneatBaseCalculator):
 	
-	def __init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection, output_matrix):
-		QneatBaseCalculator.__init__(self, input_network, input_points, input_directionFieldId, input_directDirectionValue, input_reverseDirectionValue, input_bothDirectionValue, input_defaultDirection)
-		self.networkEnterCost = self.calcNetworkEnterCost()
+	def __init__(self,
+				input_network,
+				input_points,
+				output_matrix,
+				input_directionFieldId=None,
+				input_directDirectionValue=None,
+				input_reverseDirectionValue=None,
+				input_bothDirectionValue=None,
+				input_defaultDirection=None
+				):
+		
+		QneatBaseCalculator.__init__(self,
+									input_network,
+									input_points,
+									input_directionFieldId,
+									input_directDirectionValue,
+									input_reverseDirectionValue,
+									input_bothDirectionValue,
+									input_defaultDirection)
+		
+		logPanel("__init__[QneatODMatrixCalculator]: setting up parameters")
+		#self.networkEnterCost = self.calcNetworkEnterCost()
 		self.output_matrix = output_matrix
 		
 	
@@ -122,16 +200,9 @@ class QneatODMatrixCalculator(QneatBaseCalculator):
 		
 		self.list_input_points
 		return None
-	
+	"""
 	def calcNetworkEnterCost(self):
 		return [input_point.geometry().distance(self.list_tiedPoints[i].geometry()) for i, input_point in enumerate(self.list_input_points)]
-		
+	"""
 	
 
-if __name__ == '__main__':
-	IsoCalcObj = QneatIsochroneCalculator("graph", "points", "50/100/150/200", "interpolation_raster", "polygons")
-	IsoCalcObj.CalcIsoPoints()
-	#IsoCalcObj.getCrs("4325")
-	print IsoCalcObj.iso_points
-	print IsoCalcObj.crs
-	print dir(IsoCalcObj)

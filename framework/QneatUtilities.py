@@ -6,12 +6,13 @@ from qgis.networkanalysis import *
 from PyQt4.QtCore import QVariant
 
 def AssignAnalysisCrs(input_network):
-    log("Setting analysis CRS")
+    logPanel("Setting analysis CRS")
     AnalysisCrs = input_network.crs()
+    return AnalysisCrs
 
-def log(message):
+def logPanel(message):
     QgsMessageLog.logMessage(message, "QNEAT")
-    
+
 
 def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_geometry, list_qgsfield):
     
@@ -36,6 +37,11 @@ def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_ge
     vector_layer.commitChanges()
 
     return vector_layer
+
+def getListOfPoints(vlayer):
+    fRequest = QgsFeatureRequest().setFilterFids(vlayer.allFeatureIds())
+    features = vlayer.getFeatures(fRequest)
+    return [f.geometry().asPoint() for f in features]
 
 def getLayerGeometryType(vlayer):
     wkbType = vlayer.wkbType()

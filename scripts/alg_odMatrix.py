@@ -1,18 +1,33 @@
 ##QNEAT tools=group
-##input_network=vector
-##input_points=vector
-#input_directionFieldId= optional field
-#input_directDirectionValue=optional number
-#input_reverseDirectionNumber=optional number
-#input_bothDirectionValue=optional number
-#input_defaultDirection=optional number 3
-#output_matrix=output table
+##Input_Network_Layer=vector
+##Input_Point_Layer=vector
+#Direction_Field= optional field
+#Value_for_normal_Links=optional number
+#Value_for reverse_Direction=optional number
+#Value_for_bidirectional_Links=optional number
+#Value_for_Default_Direction=optional number 3
+##Output_Matrix_File=output table
+"""
+Input_Network_Layer="STRASSENGRAPHOGD" #input parameters return filepaths
+Input_Point_Layer="POINTS"
+Output_Matrix_File="C:\Matrix_File.csv"
+"""
+from QNEAT.framework import QneatUtilities as util
+from QNEAT.framework.QneatFramework import QneatODMatrixCalculator
 
-import QNEAT.framework.QneatUtilities as util
-import QNEAT.framework.QneatFramework as QneatFramework
 
-util.log("HelloWorld")
-util.log("This is the QNEAT Plugin speaking!")
-
+def log(message):
+    progress.setText(message)
+    util.logPanel(message)
+    
+    
+QneatODMatrixCalculator(
+            input_network = Input_Network_Layer,
+            input_points = Input_Point_Layer,
+            output_matrix= Output_Matrix_File)
+   
+log("HelloWorld")
+log("This is the QNEAT Plugin speaking!")
+log("We are now ending the algorthim")
 
 
