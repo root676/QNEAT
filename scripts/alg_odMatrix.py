@@ -1,6 +1,7 @@
 ##QNEAT tools=group
 ##Input_Network_Layer=vector
 ##Input_Point_Layer=vector
+##Input_Point_IDField=field Input_Point_Layer
 #Direction_Field= optional field
 #Value_for_normal_Links=optional number
 #Value_for reverse_Direction=optional number
@@ -25,6 +26,7 @@ QneatODMatrixCalculator(
             input_network = Input_Network_Layer,
             input_points = Input_Point_Layer,
             output_matrix= Output_Matrix_File)
+
 
 
 log("Initialization Done")

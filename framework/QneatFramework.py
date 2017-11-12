@@ -12,6 +12,37 @@ from processing.tools.dataobjects import getObjectFromUri
 
 import gdal, ogr
 
+class QneatAnalysisPoint():
+	
+	def __init__(self, layer_name, feature, point_id):
+		self.layer_name = layer_name
+		self.point_id = point_id
+		self.point_geom = feature.geometry().asPoint()
+		self.entry_cost = None
+		self.netry_geom = None
+		
+	def calcEntryCost(self, network):
+		#logic to calculate cost to nearest network entry point according to properter
+		pass
+	
+	def calcEntryGeom(self, network):
+		pass
+	
+	def getNearestNetworkNodeId(self):
+		pass
+	
+	def getNearestNetworkNodeGeom(self):
+		pass
+	
+	def getXCoord(self):
+		return self.point_geom.x()
+	
+	def getYCoord(self):
+		return self.point_geom.y()
+	
+	
+	
+	
 
 class QneatBaseCalculator():
 	
@@ -25,6 +56,7 @@ class QneatBaseCalculator():
 	def __init__(self,
 				 input_network,
 				 input_points,
+				 input_pointIdField,
 				 input_directionFieldId=None,
 				 input_directDirectionValue=None,
 				 input_reverseDirectionValue=None,
@@ -36,7 +68,7 @@ class QneatBaseCalculator():
 		logPanel("__init__[QneatBaseCalculator]: setting up datasets")
 		self.input_network = getObjectFromUri(input_network)
 		self.input_points = getObjectFromUri(input_points)
-		
+		self.input_pointIdField = input_pointIdField
 	
 		#init computabiliyt and crs
 		logPanel("__init__[QneatBaseCalculator]: checking computability")
