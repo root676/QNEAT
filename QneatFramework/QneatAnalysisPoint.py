@@ -22,9 +22,9 @@ from QneatUtilities import *
 
 class QneatAnalysisPoint():
     
-    def __init__(self, layer_name, feature, point_id):
+    def __init__(self, layer_name, feature, point_id_field_name):
         self.layer_name = layer_name
-        self.point_id = point_id
+        self.point_id = feature[point_id_field_name]
         self.point_geom = feature.geometry().asPoint()
         self.entry_cost = None
         self.netry_geom = None
@@ -47,3 +47,6 @@ class QneatAnalysisPoint():
     
     def getYCoord(self):
         return self.point_geom.y()
+    
+    def __str__(self):
+        return "QneatAnalysis Point:" + self.layer_name + "    " + str(self.point_id.encode('utf-8')) + "    " + str(self.point_geom.x()) + "    " + str(self.point_geom.y())

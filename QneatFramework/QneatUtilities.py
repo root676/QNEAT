@@ -46,6 +46,11 @@ def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_ge
 
     return vector_layer
 
+def getFeatures(vlayer):
+    fRequest = QgsFeatureRequest().setFilterFids(vlayer.allFeatureIds())
+    return vlayer.getFeatures(fRequest)
+
+
 def getListOfPoints(vlayer):
     fRequest = QgsFeatureRequest().setFilterFids(vlayer.allFeatureIds())
     features = vlayer.getFeatures(fRequest)
