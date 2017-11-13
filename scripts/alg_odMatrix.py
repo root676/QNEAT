@@ -1,3 +1,13 @@
+"""
+***************************************************************************
+    alg_odMatrix.py
+    ---------------------
+    Date                 : November 2017
+    Copyright            : (C) 2017 by Clemens Raffler
+    Email                : clemens dot raffler at gmail dot com
+***************************************************************************
+"""
+
 ##QNEAT tools=group
 ##Input_Network_Layer=vector
 ##Input_Point_Layer=vector
@@ -13,8 +23,8 @@ Input_Network_Layer="STRASSENGRAPHOGD" #input parameters return filepaths
 Input_Point_Layer="POINTS"
 Output_Matrix_File="C:\Matrix_File.csv"
 """
-from QNEAT.framework import QneatUtilities as util
-from QNEAT.framework.QneatFramework import QneatODMatrixCalculator
+
+from QneatFramework import QneatNetwork, QneatAnalysisPoint, QneatUtilities as util
 
 
 def log(message):
@@ -22,10 +32,9 @@ def log(message):
     
     
 log("Initializing QneatODMatrixCalculator")
-QneatODMatrixCalculator(
+QneatNetwork(
             input_network = Input_Network_Layer,
-            input_points = Input_Point_Layer,
-            output_matrix= Output_Matrix_File)
+            input_points = Input_Point_Layer)
 
 
 

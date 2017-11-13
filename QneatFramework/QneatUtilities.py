@@ -1,4 +1,12 @@
-
+"""
+***************************************************************************
+    QneatUtilities.py
+    ---------------------
+    Date                 : November 2017
+    Copyright            : (C) 2017 by Clemens Raffler
+    Email                : clemens dot raffler at gmail dot com
+***************************************************************************
+"""
 from qgis.core import *
 from qgis.analysis import *
 from qgis.networkanalysis import *
