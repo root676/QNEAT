@@ -23,6 +23,8 @@ Input_Network_Layer="STRASSENGRAPHOGD" #input parameters return filepaths
 Input_Point_Layer="POINTS"
 Output_Matrix_File="C:\Matrix_File.csv"
 """
+layer_name = "point"
+
 
 from QNEAT.QneatFramework.QneatNetwork import QneatNetwork
 from QNEAT.QneatFramework.QneatAnalysisPoint import QneatAnalysisPoint
@@ -35,18 +37,36 @@ def log(message):
     
     
 log("Initializing QneatODMatrixCalculator")
-analysis_network= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer, input_pointIdField = Input_Point_IDField)
+net= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer, input_pointIdField = Input_Point_IDField)
 
 
 
 log("populating QneatAnalysisPoint List")
-list_analysis_points = [QneatAnalysisPoint("point", feature, analysis_network.input_pointIdField) for i, feature in enumerate(util.getFeatures(analysis_network.input_points))]
+list_analysis_points = [QneatAnalysisPoint("point", feature, net.input_pointIdField, net.network, net.list_tiedPoints[i]) for i, feature in enumerate(util.getFeatures(net.input_points))]
 log("population Done")
 
 for point in list_analysis_points:
     log(point.__str__())
+"""
+dijkstra_query = net.calcDijkstra(list_analysis_points[0].network_vertex_id, 0)
+
+log(str(len(dijkstra_query[0])))
+log(str(len(dijkstra_query[1])))
+"""
+
+
+for start_point in list_analysis_points:
+    dijkstra_query = net.calcDijkstra(start_point.network_vertex_id, 0)
+    for query_point in list_analysis_points:
+        if dijkstra_query[0][query_point.network_vertex_id] == -1:
+            log("Path not found")
+        else:
+            """
+            endpoint_array_index = dijkstra_query[0].index(query_point.network_vertex_id)
+            cost_val = dijkstra_query[1][endpoint_array_index]
+            """
+            log(str(dijkstra_query[1][query_point.network_vertex_id]))
 
 log("Initialization Done")
 log("Ending Algorithm")
-
 

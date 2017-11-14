@@ -98,9 +98,17 @@ class QneatNetwork():
             logPanel("__init__[QneatBaseCalculator]: init complete")
             
             
-    def calcDijkstra(self, startPoint):
-        """Calculates Dijkstra on whole network beginning from one startPoint. Returns a tuple of TreeId-Array and Cost-Array that match up with their indices ([tree],[cost]) """
-        return QgsGraphAnalyzer.dijkstra(self.network, self.network.findVertex(startPoint),0)
+    def calcDijkstra(self, startpoint_id, criterion):
+        """Calculates Dijkstra on whole network beginning from one startPoint. Returns a list containing a TreeId-Array and Cost-Array that match up with their indices [[tree],[cost]] """
+        tree, cost = QgsGraphAnalyzer.dijkstra(self.network, startpoint_id, criterion)
+        dijkstra_query = list()
+        dijkstra_query.insert(0, tree)
+        dijkstra_query.insert(1, cost)
+        return dijkstra_query
+    
+    def calcShortestTree(self, startpoint_id, criterion):
+        tree = QgsGraphAnalyzer.shortestTree(self.network, startpoint_id, criterion)
+        return tree
         
     
     def checkComputabilityStatus(self):

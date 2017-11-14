@@ -22,32 +22,33 @@ from QneatUtilities import *
 
 class QneatAnalysisPoint():
     
-    def __init__(self, layer_name, feature, point_id_field_name):
+    def __init__(self, layer_name, feature, point_id_field_name, network, vertex_geom):
         self.layer_name = layer_name
         self.point_id = feature[point_id_field_name]
         self.point_geom = feature.geometry().asPoint()
-        self.entry_cost = None
-        self.netry_geom = None
+        self.network_vertex_id = self.getNearestVertexId(network, vertex_geom)
+        self.network_vertex = self.getNearestVertex(network, vertex_geom)
         
-    def calcEntryCost(self, network):
-        #logic to calculate cost to nearest network entry point according to properter
-        pass
+    def calcEntryCost(self, entry_linestring_geom, strategy):
+        if strategy == "distance":
+            return entry_linestring_geom.length()
+        else:
+            return None
     
-    def calcEntryGeom(self, network):
-        pass
+    def calcEntryLinestring(self):
+        return QgsGeometry.FromPolyline([self.point_geom, self.network_vertex.point()])
     
-    def getNearestNetworkNodeId(self):
-        pass
-    
-    def getNearestNetworkNodeGeom(self):
-        pass
-    
-    def getXCoord(self):
-        return self.point_geom.x()
-    
-    def getYCoord(self):
-        return self.point_geom.y()
+    def getNearestVertexId(self, network, vertex_geom):
+        return network.findVertex(vertex_geom)
+        
+    def getNearestVertex(self, network, vertex_geom):
+        return network.vertex(self.getNearestVertexId(network, vertex_geom))
     
     def __str__(self):
-        return "QneatAnalysis Point:" + self.layer_name + "    " + str(self.point_id.encode('utf-8')) + "    Start Point:" + self.point_geom.__str__() + "    End Point:" + self.point_geom.__str__()
+        try:
+            pid = str(self.point_id).decode('utf8')
+        except UnicodeEncodeError:
+            pid = self.point_id
+        return u"QneatAnalysisPoint: {} analysis_id: {:30} FROM {:30} TO {:30} network_id: {:d}".format(self.layer_name, pid, self.point_geom.__str__(), self.network_vertex.point().__str__(), self.network_vertex_id)    
+        
                                                                                                                                                                                                                         
