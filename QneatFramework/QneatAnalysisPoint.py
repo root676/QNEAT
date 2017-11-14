@@ -49,4 +49,5 @@ class QneatAnalysisPoint():
         return self.point_geom.y()
     
     def __str__(self):
-        return "QneatAnalysis Point:" + self.layer_name + "    " + str(self.point_id.encode('utf-8')) + "    " + str(self.point_geom.x()) + "    " + str(self.point_geom.y())
+        return "QneatAnalysis Point:" + self.layer_name + "    " + str(self.point_id.encode('utf-8')) + "    Start Point:" + self.point_geom.__str__() + "    End Point:" + self.point_geom.__str__()
+                                                                                                                                                                                                                        
