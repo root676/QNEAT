@@ -29,14 +29,15 @@ class QneatAnalysisPoint():
         self.network_vertex_id = self.getNearestVertexId(network, vertex_geom)
         self.network_vertex = self.getNearestVertex(network, vertex_geom)
         
-    def calcEntryCost(self, entry_linestring_geom, strategy):
+    def calcEntryCost(self, strategy):
+        entry_linestring_geom = self.calcEntryLinestring()
         if strategy == "distance":
             return entry_linestring_geom.length()
         else:
             return None
     
     def calcEntryLinestring(self):
-        return QgsGeometry.FromPolyline([self.point_geom, self.network_vertex.point()])
+        return QgsGeometry.fromPolyline([self.point_geom, self.network_vertex.point()])
     
     def getNearestVertexId(self, network, vertex_geom):
         return network.findVertex(vertex_geom)

@@ -114,4 +114,5 @@ def getSingleGeometryAsList(vlayer):
         extracted_geom = extractGeometryAsSingle(geom)
         list_singlegeom.extend(extracted_geom)
     return list_singlegeom
-        
+
+
