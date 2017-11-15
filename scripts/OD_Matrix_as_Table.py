@@ -37,7 +37,13 @@ from QNEAT.QneatFramework import QneatUtilities as util
 def log(message):
     progress.setText(message)
     
-start_time = time.time()
+def setProgress(current_workstep_number, total_workload):
+    progress.setPercentage(int((float(current_workstep_number)/total_workload)*100))
+
+
+progress.setPercentage(0)
+#obtain starting time for alg evaluation    
+alg_start_time = time.time()
     
 log("Initializing QneatODMatrixCalculator")
 net= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer, input_pointIdField = Input_Point_IDField)
@@ -48,49 +54,37 @@ log("populating QneatAnalysisPoint List")
 list_analysis_points = [QneatAnalysisPoint("point", feature, net.input_pointIdField, net.network, net.list_tiedPoints[i]) for i, feature in enumerate(util.getFeatures(net.input_points))]
 log("population Done")
 
-for point in list_analysis_points:
-    log(point.__str__())
-"""
-dijkstra_query = net.calcDijkstra(list_analysis_points[0].network_vertex_id, 0)
+#estimate total workload
+total_workload = float(pow(len(list_analysis_points),2))
 
-log(str(len(dijkstra_query[0])))
-log(str(len(dijkstra_query[1])))
-"""
-
+#IMPLEMENT unrechable points properly
 with open(Output_Matrix_csv_File, 'wb') as csvfile:
     wr = csv.writer(csvfile, delimiter=';',
                                 quotechar='|', 
                                 quoting=csv.QUOTE_MINIMAL)
     wr.writerow(["point_a","point_b","cost"])
     
-    i = 0
+    current_workstep_number = 0
     for start_point in list_analysis_points:
+
         dijkstra_query = net.calcDijkstra(start_point.network_vertex_id, 0)
         for query_point in list_analysis_points:
-            if (i%1000)==0:
-                log("{} OD-pairs processed...".format(i))
+            if (current_workstep_number%1000)==0:
+                log("{} OD-pairs processed...".format(current_workstep_number))
             if dijkstra_query[0][query_point.network_vertex_id] == -1:
                 wr.writerow([start_point.point_geom.__str__(),query_point.point_geom.__str__(),float(0)])
             else:
                 entry_cost = start_point.calcEntryCost("distance")+query_point.calcEntryCost("distance")
                 total_cost = dijkstra_query[1][query_point.network_vertex_id]+entry_cost
                 wr.writerow([start_point.point_geom.__str__(),query_point.point_geom.__str__(),total_cost])
-            i=i+1
-    log("Total number of OD-pairs processed: {}".format(i))
-    """
-    endpoint_array_index = dijkstra_query[0].index(query_point.network_vertex_id)
-    cost_val = dijkstra_query[1][endpoint_array_index]
-    """
-    """
-    start = "FROM: "+start_point.point_geom.__str__()
-    stop = " TO:"+query_point.point_geom.__str__()
-    entry_cost = start_point.calcEntryCost("distance")+query_point.calcEntryCost("distance")
-    cost_num = dijkstra_query[1][query_point.network_vertex_id]+entry_cost
-    log(start+stop+"entry_cost: "+str(entry_cost)+"     total_cost: "+str(cost_num))
-    wr.writerow(['Spam'] * 5 + ['Baked Beans'])
-    """
+            current_workstep_number=current_workstep_number+1
+            setProgress(current_workstep_number, total_workload)
+            
+    log("Total number of OD-pairs processed: {}".format(current_workstep_number))
+
     log("Initialization Done")
     log("Ending Algorithm")
 
-duration = time.time()-start_time
+#log duration to console
+duration = time.time()- alg_start_time
 log("Algorithm execution duration: {}".format(duration))
