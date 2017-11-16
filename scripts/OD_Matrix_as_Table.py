@@ -11,7 +11,7 @@
 ##QNEAT tools=group
 ##Input_Network_Layer=vector
 ##Input_Point_Layer=vector
-##Input_Point_IDField=field Input_Point_Layer
+##Input_unique_Point_ID_Field=field Input_Point_Layer
 #Direction_Field= optional field
 #Value_for_normal_Links=optional number
 #Value_for reverse_Direction=optional number
@@ -33,7 +33,10 @@ from QNEAT.QneatFramework.QneatAnalysisPoint import QneatAnalysisPoint
 from QNEAT.QneatFramework import QneatUtilities as util
 
  
-
+"""
+logging functions:
+Must remain in script file because progress variable is only available in processing context
+"""
 def log(message):
     progress.setText(message)
     
@@ -41,42 +44,47 @@ def setProgress(current_workstep_number, total_workload):
     progress.setPercentage(int((float(current_workstep_number)/total_workload)*100))
 
 
-progress.setPercentage(0)
+
 #obtain starting time for alg evaluation    
 alg_start_time = time.time()
     
-log("Initializing QneatODMatrixCalculator")
-net= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer, input_pointIdField = Input_Point_IDField)
+log("Initializing QneatNetwork")
+net= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer)
+log("Initialization done")
 
-
-
-log("populating QneatAnalysisPoint List")
-list_analysis_points = [QneatAnalysisPoint("point", feature, net.input_pointIdField, net.network, net.list_tiedPoints[i]) for i, feature in enumerate(util.getFeatures(net.input_points))]
-log("population Done")
+#implement layer name initialization
+log("Initialize QneatAnalysisPoint list")
+list_analysis_points = [QneatAnalysisPoint("point", feature, Input_unique_Point_ID_Field, net.network, net.list_tiedPoints[i]) for i, feature in enumerate(util.getFeatures(net.input_points))]
+log("Population done")
 
 #estimate total workload
 total_workload = float(pow(len(list_analysis_points),2))
+log("Expecting total workload of {} iterations".format(int(total_workload)))
 
 #IMPLEMENT unrechable points properly
 with open(Output_Matrix_csv_File, 'wb') as csvfile:
-    wr = csv.writer(csvfile, delimiter=';',
+    csv_writer = csv.writer(csvfile, delimiter=';',
                                 quotechar='|', 
                                 quoting=csv.QUOTE_MINIMAL)
-    wr.writerow(["point_a","point_b","cost"])
+    #write header
+    csv_writer.writerow(["origin_id","destination_id","cost"])
     
     current_workstep_number = 0
+    
     for start_point in list_analysis_points:
-
+        #optimize in case of undirected (not necessary to call calcDijkstra as it has already been calculated - can be replaced by reading from list)
         dijkstra_query = net.calcDijkstra(start_point.network_vertex_id, 0)
         for query_point in list_analysis_points:
             if (current_workstep_number%1000)==0:
                 log("{} OD-pairs processed...".format(current_workstep_number))
-            if dijkstra_query[0][query_point.network_vertex_id] == -1:
-                wr.writerow([start_point.point_geom.__str__(),query_point.point_geom.__str__(),float(0)])
+            if query_point.point_id == start_point.point_id:
+                csv_writer.writerow([start_point.point_id, query_point.point_id, float(0)])
+            elif dijkstra_query[0][query_point.network_vertex_id] == -1:
+                csv_writer.writerow([start_point.point_id, query_point.point_id, None])
             else:
                 entry_cost = start_point.calcEntryCost("distance")+query_point.calcEntryCost("distance")
                 total_cost = dijkstra_query[1][query_point.network_vertex_id]+entry_cost
-                wr.writerow([start_point.point_geom.__str__(),query_point.point_geom.__str__(),total_cost])
+                csv_writer.writerow([start_point.point_id, query_point.point_id, total_cost])
             current_workstep_number=current_workstep_number+1
             setProgress(current_workstep_number, total_workload)
             

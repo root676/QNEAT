@@ -33,7 +33,6 @@ class QneatNetwork():
     def __init__(self,
                  input_network,
                  input_points,
-                 input_pointIdField,
                  input_directionFieldId=None,
                  input_directDirectionValue=None,
                  input_reverseDirectionValue=None,
@@ -45,7 +44,6 @@ class QneatNetwork():
         logPanel("__init__[QneatBaseCalculator]: setting up datasets")
         self.input_network = getObjectFromUri(input_network)
         self.input_points = getObjectFromUri(input_points)
-        self.input_pointIdField = input_pointIdField
     
         #init computabiliyt and crs
         logPanel("__init__[QneatBaseCalculator]: checking computability")
