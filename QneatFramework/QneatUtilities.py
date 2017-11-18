@@ -13,14 +13,20 @@ from qgis.networkanalysis import *
 
 from PyQt4.QtCore import QVariant
 
-def AssignAnalysisCrs(input_network):
+def AssignAnalysisCrs(vlayer):
     logPanel("Setting analysis CRS")
-    AnalysisCrs = input_network.crs()
+    AnalysisCrs = vlayer.crs()
     return AnalysisCrs
 
 def logPanel(message):
     QgsMessageLog.logMessage(message, "QNEAT")
-
+    
+def isGeometryType(vlayer, type_obj):
+    geom_type = vlayer.geometryType()
+    if geom_type == type_obj:
+        return True
+    else:
+        return False
 
 def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_geometry, list_qgsfield):
     

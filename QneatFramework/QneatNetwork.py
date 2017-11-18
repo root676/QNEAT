@@ -15,6 +15,7 @@ from qgis.networkanalysis import *
 from PyQt4.QtCore import QVariant
 
 from QneatUtilities import *
+from QneatExceptions import QneatGeometryException, QneatCrsException
 
 from processing.tools.dataobjects import getObjectFromUri
 
@@ -38,13 +39,28 @@ class QneatNetwork():
                  input_reverseDirectionValue=None,
                  input_bothDirectionValue=None, 
                  input_defaultDirection=None):
-        #init
+
         logPanel("__init__[QneatBaseCalculator]: setting up parameters")
-        #init datsets
+
+
         logPanel("__init__[QneatBaseCalculator]: setting up datasets")
-        self.input_network = getObjectFromUri(input_network)
-        self.input_points = getObjectFromUri(input_points)
-    
+        
+        #init datasets and check for right geometry
+        layer = getObjectFromUri(input_network)
+        if isGeometryType(layer, QGis.Line):
+            self.input_network = getObjectFromUri(input_network)
+        else:
+            logPanel("ERROR: Network layer should be dataset layer")
+            raise QneatGeometryException(layer.geometryType(), QGis.Line)
+        
+        layer = getObjectFromUri(input_points)
+        if isGeometryType(layer, QGis.Point):
+            self.input_points = layer
+        else:
+            logPanel("ERROR: Point layer should be point dataset")
+            raise QneatGeometryException(layer.geometryType(), QGis.Point)
+        del layer
+        
         #init computabiliyt and crs
         logPanel("__init__[QneatBaseCalculator]: checking computability")
         self.ComputabilityStatus = self.checkComputabilityStatus()
@@ -94,7 +110,7 @@ class QneatNetwork():
             logPanel("...Build the graph")
             self.network = self.builder.graph()
             logPanel("__init__[QneatBaseCalculator]: init complete")
-            
+                
             
     def calcDijkstra(self, startpoint_id, criterion):
         """Calculates Dijkstra on whole network beginning from one startPoint. Returns a list containing a TreeId-Array and Cost-Array that match up with their indices [[tree],[cost]] """
@@ -121,7 +137,7 @@ class QneatNetwork():
             logPanel("...Network-dataset: {}".format(input_network_srid))
             logPanel("...Point-dataset: {}".format(input_points_srid))
             logPanel("...Please reproject input datasets so that they share the same spatial reference!")
-            return False
+            raise QneatCrsException(input_network_srid, input_points_srid)
     
     def checkIfDirected(self, directionArgs):
         if directionArgs.count(None) == 0:
