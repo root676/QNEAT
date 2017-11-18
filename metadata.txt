@@ -11,5 +11,5 @@ email=clemens.raffler@gmail.com
 tags=analysis,processing
 
 homepage=http://qgis.org
-tracker=https://hub.qgis.org/projects/QGIS/issues
-repository=https://github.com/qgis/QGIS
+tracker=https://github.com/root676/QNEAT/issues
+repository=https://github.com/root676/QNEAT
