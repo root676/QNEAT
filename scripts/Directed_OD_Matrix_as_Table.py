@@ -1,6 +1,6 @@
 """
 ***************************************************************************
-    OD_Matrix_as_Table.py
+    Directed_OD_Matrix_as_Table.py
     ---------------------
     Date                 : November 2017
     Copyright            : (C) 2017 by Clemens Raffler
@@ -12,11 +12,11 @@
 ##Input_Network_Layer=vector
 ##Input_Point_Layer=vector
 ##Input_unique_Point_ID_Field=field Input_Point_Layer
-#Direction_Field= optional field
-#Value_for_normal_Links=optional number
-#Value_for reverse_Direction=optional number
-#Value_for_bidirectional_Links=optional number
-#Value_for_Default_Direction=optional number 3
+##Direction_Field=field Input_Network_Layer
+##Value_for_direct_Links=number 1
+##Value_for_reversed_Links=number 0
+##Value_for_bidirectional_Links=number 2
+##Value_for_default_Direction=number 2
 ##Output_Matrix_csv_File=output table
 """
 Input_Network_Layer="STRASSENGRAPHOGD" #input parameters return filepaths
@@ -49,7 +49,13 @@ def setProgress(current_workstep_number, total_workload):
 alg_start_time = time.time()
     
 log("Initializing QneatNetwork")
-net= QneatNetwork(input_network = Input_Network_Layer, input_points = Input_Point_Layer)
+net= QneatNetwork(input_network = Input_Network_Layer,
+                  input_points = Input_Point_Layer,
+                  input_directionFieldName = Direction_Field, 
+                  input_directDirectionValue = str(Value_for_direct_Links),
+                  input_reverseDirectionValue = str(Value_for_reversed_Links),
+                  input_bothDirectionValue = str(Value_for_bidirectional_Links), 
+                  input_defaultDirection = int(Value_for_default_Direction))
 log("Initialization done")
 
 #implement layer name initialization

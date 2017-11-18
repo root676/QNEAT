@@ -1,3 +1,13 @@
+"""
+***************************************************************************
+    QneatExceptions.py
+    ---------------------
+    Date                 : November 2017
+    Copyright            : (C) 2017 by Clemens Raffler
+    Email                : clemens dot raffler at gmail dot com
+***************************************************************************
+"""
+
 class QneatGeometryException(Exception):
     def __init__(self, given_input, expected_input):
     
@@ -12,4 +22,3 @@ class QneatCrsException(Exception):
         self.message = "Coordinate Reference Systems don't match up: {} Reproject all datasets so that their CRSs match up.".format(list(crs))
 
         super(QneatCrsException, self).__init__(self.message)
-

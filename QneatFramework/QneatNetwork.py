@@ -18,6 +18,7 @@ from QneatUtilities import *
 from QneatExceptions import QneatGeometryException, QneatCrsException
 
 from processing.tools.dataobjects import getObjectFromUri
+from processing.tools.vector import resolveFieldIndex
 
 import gdal, ogr
     
@@ -34,7 +35,7 @@ class QneatNetwork():
     def __init__(self,
                  input_network,
                  input_points,
-                 input_directionFieldId=None,
+                 input_directionFieldName=None,
                  input_directDirectionValue=None,
                  input_reverseDirectionValue=None,
                  input_bothDirectionValue=None, 
@@ -76,7 +77,7 @@ class QneatNetwork():
                 logPanel("...Analysis is directed")
                 logPanel("...setting up Director")
                 self.director = QgsLineVectorLayerDirector(self.input_network,
-                                            input_directionFieldId,
+                                            resolveFieldIndex(self.input_network, input_directionFieldName),
                                             input_directDirectionValue,
                                             input_reverseDirectionValue,
                                             input_bothDirectionValue,
