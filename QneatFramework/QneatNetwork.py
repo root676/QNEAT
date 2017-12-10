@@ -17,12 +17,11 @@ from PyQt4.QtCore import QVariant
 from QneatUtilities import *
 from QneatExceptions import QneatGeometryException, QneatCrsException
 
-from processing.tools.dataobjects import getObjectFromUri
+
 from processing.tools.vector import resolveFieldIndex
 
 import gdal, ogr
     
-
 class QneatNetwork():
     
     
@@ -34,7 +33,7 @@ class QneatNetwork():
     
     def __init__(self,
                  input_network,
-                 input_points,
+                 input_points, # must be qgsvectorlayer (either form disc or built from coord)
                  input_directionFieldName=None,
                  input_directDirectionValue=None,
                  input_reverseDirectionValue=None,
@@ -47,20 +46,17 @@ class QneatNetwork():
         logPanel("__init__[QneatBaseCalculator]: setting up datasets")
         
         #init datasets and check for right geometry
-        layer = getObjectFromUri(input_network)
-        if isGeometryType(layer, QGis.Line):
-            self.input_network = getObjectFromUri(input_network)
+        if isGeometryType(input_network, QGis.Line):
+            self.input_network = input_network
         else:
             logPanel("ERROR: Network layer should be dataset layer")
-            raise QneatGeometryException(layer.geometryType(), QGis.Line)
+            raise QneatGeometryException(input_network.geometryType(), QGis.Line)
         
-        layer = getObjectFromUri(input_points)
-        if isGeometryType(layer, QGis.Point):
-            self.input_points = layer
+        if isGeometryType(input_points, QGis.Point):
+            self.input_points = input_points
         else:
             logPanel("ERROR: Point layer should be point dataset")
-            raise QneatGeometryException(layer.geometryType(), QGis.Point)
-        del layer
+            raise QneatGeometryException(input_points.geometryType(), QGis.Point)
         
         #init computabiliyt and crs
         logPanel("__init__[QneatBaseCalculator]: checking computability")

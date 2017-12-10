@@ -35,7 +35,7 @@ class QneatAnalysisPoint():
             return entry_linestring_geom.length()
         else:
             return None
-    
+
     def calcEntryLinestring(self):
         return QgsGeometry.fromPolyline([self.point_geom, self.network_vertex.point()])
     

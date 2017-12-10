@@ -28,7 +28,7 @@ def isGeometryType(vlayer, type_obj):
     else:
         return False
 
-def populateMemoryQgsVectorLayer(string_geomtype, string_layername, crs, list_geometry, list_qgsfield):
+def buildQgsVectorLayer(string_geomtype, string_layername, crs, list_geometry, list_qgsfield):
     
     #create new vector layer from self.crs
     vector_layer = QgsVectorLayer(string_geomtype, string_layername, "memory")

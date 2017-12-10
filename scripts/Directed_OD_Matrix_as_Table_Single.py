@@ -32,6 +32,7 @@ from QNEAT.QneatFramework.QneatNetwork import QneatNetwork
 from QNEAT.QneatFramework.QneatAnalysisPoint import QneatAnalysisPoint
 from QNEAT.QneatFramework import QneatUtilities as util
 
+from processing.tools.dataobjects import getObjectFromUri
  
 """
 logging functions:
@@ -49,8 +50,10 @@ def setProgress(current_workstep_number, total_workload):
 alg_start_time = time.time()
     
 log("Initializing QneatNetwork")
-net= QneatNetwork(input_network = Input_Network_Layer,
-                  input_points = Input_Point_Layer,
+net_layer = getObjectFromUri(Input_Network_Layer)
+point_layer = getObjectFromUri(Input_Point_Layer)
+net= QneatNetwork(input_network = net_layer,
+                  input_points = point_layer,
                   input_directionFieldName = Direction_Field, 
                   input_directDirectionValue = str(Value_for_direct_Links),
                   input_reverseDirectionValue = str(Value_for_reversed_Links),
