@@ -37,7 +37,7 @@ from .algs import (
     OdMatrixFromLayersAsLines
     )
 
-pluginPath = os.path.split(os.path.dirname(__file__))[0]
+pluginPath = os.path.dirname(__file__)
 
 class QneatProvider(QgsProcessingProvider):
     def __init__(self):
@@ -47,13 +47,16 @@ class QneatProvider(QgsProcessingProvider):
         return 'qneat'
 
     def name(self):
-        return 'QNEAT - Qgis Network Analysis Toolbox'
+        return 'QNEAT'
+
+    def longName(self):
+        return 'QNEAT - QGIS Network Analysis Toolbox'
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT', 'icon_qneat.svg'))
+        return QIcon(self.svgIconPath())
 
     def svgIconPath(self):
-        return os.path.join(pluginPath, 'QNEAT', 'icon_qneat.svg')
+        return os.path.join(pluginPath, 'icon_qneat.svg')
 
     def loadAlgorithms(self):
         self.addAlgorithm(ShortestPathBetweenPoints.ShortestPathBetweenPoints())

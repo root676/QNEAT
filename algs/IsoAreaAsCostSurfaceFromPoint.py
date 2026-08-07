@@ -48,7 +48,7 @@ from qgis.analysis import QgsVectorLayerDirector
 from ..QneatFramework import QneatCore, IsoAreaMethod, OptimizationStrategy, ProgressRange
 from ..QneatUtilities import checkIfAnalysisCrsEqual, getFeatureFromPoint
 
-pluginPath = os.path.split(os.path.split(os.path.dirname(__file__))[0])[0]
+pluginPath = os.path.dirname(os.path.dirname(__file__))
 
 from typing import (
     TYPE_CHECKING
@@ -89,7 +89,7 @@ class IsoAreaAsCostSurfaceFromPoint(QgsProcessingAlgorithm):
         return QCoreApplication.translate('QNEAT', string)
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT3', 'icons', 'icon_servicearea_interpolation.png'))
+        return QIcon(os.path.join(pluginPath, 'icons', 'icon_servicearea_interpolation.png'))
 
     def group(self):
         return self.tr('Iso-Areas')

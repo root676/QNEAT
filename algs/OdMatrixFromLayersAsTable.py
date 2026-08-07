@@ -52,7 +52,7 @@ from qgis.analysis import (QgsVectorLayerDirector)
 from ..QneatFramework import QneatCore, OptimizationStrategy, MatrixType, ProgressRange
 from ..QneatUtilities import getFieldDatatype, getOdMatrixFields
 
-pluginPath = os.path.split(os.path.split(os.path.dirname(__file__))[0])[0]
+pluginPath = os.path.dirname(os.path.dirname(__file__))
 
 from typing import (
     Dict,
@@ -93,16 +93,16 @@ class OdMatrixFromLayersAsTable(QgsProcessingAlgorithm):
         return QCoreApplication.translate('QNEAT', string)
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT3', 'icons', 'icon_matrix.svg'))
+        return QIcon(os.path.join(pluginPath, 'icons', 'icon_matrix.svg'))
 
     def group(self):
         return self.tr('Distance Matrices')
 
     def groupId(self):
-        return 'networkbaseddistancematrices'
+        return 'distancematrices'
     
     def name(self):
-        return 'OdMatrixFromLayersAsTable'
+        return 'odmatrixfromlayersastable'
 
     def displayName(self):
         return self.tr('OD matrix from layers as table (m:n)')

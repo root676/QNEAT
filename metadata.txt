@@ -6,7 +6,7 @@ name=QNEAT
 qgisMinimumVersion=3.00
 qgisMaximumVersion=3.99
 description=QNEAT - QGIS Network Analysis Toolbox
-about=The QNEAT (short for Qgis Network Analysis Toolbox) Plugin aims to provide sophisticated QGIS Processing-Toolbox algorithms in the field of network analysis. QNEAT3 is integrated in the QGIS3 Processing Framework. It offers algorithms that range from simple shortest path solving to more complex tasks like Iso-Area (aka service areas, accessibility polygons) and OD-Matrix (Origin-Destination-Matrix) computation. The usage of some Iso-Area algorithms require the installation of the matplotlib python library from OSGeo4W (see algorithm and help page for more information).
+about=The QNEAT (short for QGIS Network Analysis Toolbox) Plugin aims to provide sophisticated QGIS Processing-Toolbox algorithms in the field of network analysis. QNEAT is integrated in the QGIS Processing Framework. It offers algorithms that range from simple shortest path solving to more complex tasks like Iso-Area (aka service areas, accessibility polygons) and OD-Matrix (Origin-Destination-Matrix) computation.
 version=4.0
 author=Clemens Raffler
 email=clemens.raffler@gmail.com
@@ -47,19 +47,19 @@ changelog=3.0.0:
     3.0.8:
     - Fix issue #77: Fix wrong unpacking of dijkstra() return values. 
     4.0:
-    - After nearly 8 years in Service, QNEAT3 is bumped to verson 4. Also, the version number is dropped from the name and moved to the versions - the plugin will from now on simply be named QNEAT. The new version comes a total makeover of QNEAT3 in order to provide a more robust plugin that can be extended more easily. 
+    - After nearly 8 years in service, the plugin is bumped to version 4. The version number is dropped from the name and moved to the version field - the plugin is from now on simply named QNEAT. This release comes with a total makeover of the codebase in order to provide a more robust plugin that can be extended more easily.
     - dropped Matplotlib and pyplot prerequesites for contour generation
     - new contour generation using GDAL
-    - update of parameter names:
+    - renamed the processing provider to "qneat" and updated algorithm, group and parameter names
     - silence algorithm output and implement more consistent progress feedback
     
 # tags are comma separated with spaces allowed
 tags= network analysis, graph analysis, od matrix, distance matrix, od matrices, OD, isochrone areas, catchment areas, shortest path, dijkstra
 
 homepage=https://root676.github.io
-tracker=https://github.com/root676/QNEAT3/issues
-repository=https://github.com/root676/QNEAT3
-icon=icon_qneat3.svg
+tracker=https://github.com/root676/QNEAT/issues
+repository=https://github.com/root676/QNEAT
+icon=icon_qneat.svg
 # experimental flag
 experimental=False
 

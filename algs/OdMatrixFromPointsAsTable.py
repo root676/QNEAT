@@ -51,7 +51,7 @@ from qgis.analysis import (QgsVectorLayerDirector)
 from ..QneatFramework import QneatCore, OptimizationStrategy, MatrixType, ProgressRange
 from ..QneatUtilities import checkIfAnalysisCrsEqual, getOdMatrixFields
 
-pluginPath = os.path.split(os.path.split(os.path.dirname(__file__))[0])[0]
+pluginPath = os.path.dirname(os.path.dirname(__file__))
 
 from typing import (
     TYPE_CHECKING
@@ -88,16 +88,16 @@ class OdMatrixFromPointsAsTable(QgsProcessingAlgorithm):
         return QCoreApplication.translate('QNEAT', string)
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT3', 'icons', 'icon_matrix.svg'))
+        return QIcon(os.path.join(pluginPath, 'icons', 'icon_matrix.svg'))
 
     def group(self):
         return self.tr('Distance Matrices')
 
     def groupId(self):
-        return 'networkbaseddistancematrices'
+        return 'distancematrices'
     
     def name(self):
-        return 'OdMatrixFromPointsAsTable'
+        return 'odmatrixfrompointsastable'
 
     def displayName(self):
         return self.tr('OD matrix from points as table (n:n)')

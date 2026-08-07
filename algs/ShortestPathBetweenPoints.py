@@ -60,7 +60,7 @@ if TYPE_CHECKING:
         QgsProcessingFeatureSource
         )
 
-pluginPath = os.path.split(os.path.split(os.path.dirname(__file__))[0])[0]
+pluginPath = os.path.dirname(os.path.dirname(__file__))
 
 
 class ShortestPathBetweenPoints(QgsProcessingAlgorithm):
@@ -89,16 +89,16 @@ class ShortestPathBetweenPoints(QgsProcessingAlgorithm):
         return QCoreApplication.translate('QNEAT', string)
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT3', 'icons', 'icon_dijkstra_onetoone.svg'))
+        return QIcon(os.path.join(pluginPath, 'icons', 'icon_dijkstra_onetoone.svg'))
 
     def group(self):
         return self.tr('Routing')
 
     def groupId(self):
-        return 'networkanalysis'
+        return 'routing'
     
     def name(self):
-        return 'shortestpathpointtopoint'
+        return 'shortestpathbetweenpoints'
 
     def displayName(self):
         return self.tr('Shortest path (point to point)')

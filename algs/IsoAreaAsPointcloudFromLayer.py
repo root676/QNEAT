@@ -53,7 +53,7 @@ from qgis.analysis import QgsVectorLayerDirector
 from ..QneatFramework import QneatCore, OptimizationStrategy, ProgressRange
 from ..QneatUtilities import getFieldDatatype, checkIfAnalysisCrsEqual
 
-pluginPath = os.path.split(os.path.split(os.path.dirname(__file__))[0])[0]
+pluginPath = os.path.dirname(os.path.dirname(__file__))
 
 from typing import (
     TYPE_CHECKING
@@ -92,7 +92,7 @@ class IsoAreaAsPointcloudFromLayer(QgsProcessingAlgorithm):
         return QCoreApplication.translate('QNEAT', string)
 
     def icon(self):
-        return QIcon(os.path.join(pluginPath, 'QNEAT3', 'icons', 'icon_servicearea_points_multiple.svg'))
+        return QIcon(os.path.join(pluginPath, 'icons', 'icon_servicearea_points_multiple.svg'))
 
     def group(self):
         return self.tr('Iso-Areas')
@@ -104,7 +104,7 @@ class IsoAreaAsPointcloudFromLayer(QgsProcessingAlgorithm):
         return 'isoareaaspointcloudfromlayer'
 
     def displayName(self):
-        return self.tr('Iso-Area as pointcloud (from layer)')
+        return self.tr('Iso-area as pointcloud (from layer)')
 
     def shortHelpString(self):
         return  "<b>General:</b><br>"\
