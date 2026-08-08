@@ -3,8 +3,8 @@
 
 [general]
 name=QNEAT
-qgisMinimumVersion=3.00
-qgisMaximumVersion=3.99
+qgisMinimumVersion=4.00
+qgisMaximumVersion=4.99
 description=QNEAT - QGIS Network Analysis Toolbox
 about=The QNEAT (short for QGIS Network Analysis Toolbox) Plugin aims to provide sophisticated QGIS Processing-Toolbox algorithms in the field of network analysis. QNEAT is integrated in the QGIS Processing Framework. It offers algorithms that range from simple shortest path solving to more complex tasks like Iso-Area (aka service areas, accessibility polygons) and OD-Matrix (Origin-Destination-Matrix) computation.
 version=4.0
