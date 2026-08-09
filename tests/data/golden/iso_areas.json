@@ -1,0 +1,122 @@
+{
+  "contours_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "e0823ec0a973eb6af4f09b0e48872975",
+    "geotransform": [
+      299800.0,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 3653.279052734375,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1452,
+    "width": 44
+  },
+  "layer_contours_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "8e3780cf5f9150418d6263c7d21233c5",
+    "geotransform": [
+      299760.0,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 3860.0791015625,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1749,
+    "width": 53
+  },
+  "layer_polygons_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "8e3780cf5f9150418d6263c7d21233c5",
+    "geotransform": [
+      299760.0,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 3860.0791015625,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1749,
+    "width": 53
+  },
+  "polygons_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "e0823ec0a973eb6af4f09b0e48872975",
+    "geotransform": [
+      299800.0,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 3653.279052734375,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1452,
+    "width": 44
+  },
+  "time_polygons_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "55379d2c5d5e3b272ac417397af2fbea",
+    "geotransform": [
+      299720.0,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 630.7451171875,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 2046,
+    "width": 62
+  },
+  "tin_polygons_surface": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "6bf9ee02c2a09d84b555ef65aa8618f2",
+    "geotransform": [
+      300000.0,
+      100.0,
+      0.0,
+      63000.0,
+      0.0,
+      -100.0
+    ],
+    "height": 30,
+    "maximum": 2162.859130859375,
+    "minimum": 70.71086120605469,
+    "nodata": -9999.0,
+    "valid_count": 868,
+    "width": 40
+  }
+}

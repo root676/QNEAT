@@ -1,0 +1,5 @@
+id_int,id_str,note,wkt
+11,D_A,on node c5r3,Point (997373.3333 203411.6667)
+12,D_B,on node c3r4,Point (990811.6667 206692.5000)
+13,D_C,"off network, ties to spur end",Point (1002622.6667 208004.8333)
+14,D_D,"on edge 39, detached component",Point (1019683 232939.1667)

@@ -1,0 +1,6 @@
+id_int,id_str,note,wkt
+1,O_A,on node c1r3,Point (984250 203411.6667)
+2,O_B,"off network, ties to c1r1",Point (982281.5000 194881.5000)
+3,O_C,"off network, ties mid edge 2",Point (989171.2500 194881.5000)
+4,O_D,on node c5r4,Point (997373.3333 206692.5000)
+5,O_E,"off network, detached component",Point (1018698.7500 230314.5000)

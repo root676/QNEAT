@@ -1,0 +1,142 @@
+{
+  "euclidean_distance": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "e21e6e1a17b6bd63af7bf65a7f6653c5",
+    "geotransform": [
+      299883.333333,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 3888.97412109375,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 858,
+    "width": 26
+  },
+  "euclidean_distance_capped": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "6b871c1e075590ee838b0f116b60d5e6",
+    "geotransform": [
+      299883.333333,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 2671.410400390625,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 421,
+    "width": 26
+  },
+  "euclidean_time": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "00749d970f9e85515802e9e3459a3683",
+    "geotransform": [
+      299771.428571,
+      100.0,
+      0.0,
+      63150.0,
+      0.0,
+      -100.0
+    ],
+    "height": 33,
+    "maximum": 449.5975341796875,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1683,
+    "width": 51
+  },
+  "layer_euclidean_distance": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "c87220be7db7f9194d98edab9923438c",
+    "geotransform": [
+      299765.714286,
+      100.0,
+      0.0,
+      63141.666667,
+      0.0,
+      -100.0
+    ],
+    "height": 32,
+    "maximum": 3754.27587890625,
+    "minimum": 0.0,
+    "nodata": -9999.0,
+    "valid_count": 1664,
+    "width": 52
+  },
+  "layer_tin_distance": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "f3cdeeee2074e525d718719edc219787",
+    "geotransform": [
+      300000.0,
+      99.696049,
+      0.0,
+      63000.0,
+      0.0,
+      -97.701149
+    ],
+    "height": 29,
+    "maximum": 1929.4923095703125,
+    "minimum": 75.71029663085938,
+    "nodata": -9999.0,
+    "valid_count": 1022,
+    "width": 47
+  },
+  "tin_distance": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "7e42c748bc640f01aff85d71bdea4274",
+    "geotransform": [
+      300000.0,
+      97.222222,
+      0.0,
+      63000.0,
+      0.0,
+      -100.0
+    ],
+    "height": 30,
+    "maximum": 2454.8134765625,
+    "minimum": 98.61137390136719,
+    "nodata": -9999.0,
+    "valid_count": 455,
+    "width": 24
+  },
+  "tin_time": {
+    "authid": "EPSG:32118",
+    "bands": 1,
+    "data_type": "Float32",
+    "digest": "7dbc7a49b9717b8091c48ef8da5fe660",
+    "geotransform": [
+      300000.0,
+      99.378882,
+      0.0,
+      63000.0,
+      0.0,
+      -100.0
+    ],
+    "height": 30,
+    "maximum": 391.0027770996094,
+    "minimum": 19.688251495361328,
+    "nodata": -9999.0,
+    "valid_count": 1294,
+    "width": 46
+  }
+}
