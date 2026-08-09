@@ -63,7 +63,7 @@ def buildQgsVectorLayer(string_geomtype: str, string_layername: str, crs: QgsCoo
 def getFeatureFromPoint(user_id: int, qgs_point_xy: QgsPointXY) -> QgsFeature:     
     feature = QgsFeature()
     fields = QgsFields()
-    fields.append(QgsField('user_id', QMetaType.LongLong))
+    fields.append(QgsField('user_id', QMetaType.Type.LongLong))
     feature.setFields(fields)
     feature.setGeometry(QgsGeometry.fromPointXY(qgs_point_xy))
     feature['user_id']=user_id
@@ -76,22 +76,22 @@ def getFieldDatatype(qgs_feature_storage: Union[QgsFeatureSource, QgsFeature], f
 
 def getFieldDatatypeFromPythontype(pythonvar):
     if isinstance(pythonvar, str):
-        return QMetaType.QString
+        return QMetaType.Type.QString
     elif isinstance(pythonvar, int):
-        return QMetaType.Int
+        return QMetaType.Type.Int
     elif isinstance(pythonvar, float):
-        return QMetaType.Double
+        return QMetaType.Type.Double
     else: 
-        return QMetaType.QString
+        return QMetaType.Type.QString
     
 def getOdMatrixFields(origin_points: QgsFeatureSource, origin_id_field: str, destination_points: QgsFeatureSource, destination_id_field: str) -> QgsFields:
     output_fields = QgsFields()
     output_fields.append(QgsField('origin_id', getFieldDatatype(origin_points, origin_id_field)))
     output_fields.append(QgsField('destination_id', getFieldDatatype(destination_points, destination_id_field)))
-    output_fields.append(QgsField('entry_cost', QMetaType.Double))
-    output_fields.append(QgsField('network_cost', QMetaType.Double))
-    output_fields.append(QgsField('exit_cost', QMetaType.Double))
-    output_fields.append(QgsField('total_cost', QMetaType.Double))
+    output_fields.append(QgsField('entry_cost', QMetaType.Type.Double))
+    output_fields.append(QgsField('network_cost', QMetaType.Type.Double))
+    output_fields.append(QgsField('exit_cost', QMetaType.Type.Double))
+    output_fields.append(QgsField('total_cost', QMetaType.Type.Double))
     return output_fields
 
 def getCellIndexFromPoint(x: float, y:float, rasterExtent:QgsRectangle, cellsize: float, rows: int, cols: int):

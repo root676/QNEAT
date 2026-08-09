@@ -238,9 +238,9 @@ class IsoAreaAsCostSurfaceFromLayer(QgsProcessingAlgorithm):
         user_id_field_datatype = getFieldDatatype(origin_points, origin_id_field)
 
         source_point_fields = QgsFields()
-        source_point_fields.append(QgsField('fid', QMetaType.LongLong))
+        source_point_fields.append(QgsField('fid', QMetaType.Type.LongLong))
         source_point_fields.append(QgsField('user_id', user_id_field_datatype))
-        source_point_fields.append(QgsField('type', QMetaType.QString))
+        source_point_fields.append(QgsField('type', QMetaType.Type.QString))
 
         for f in origin_points.getFeatures():
             source_feat = QgsFeature(source_point_fields)

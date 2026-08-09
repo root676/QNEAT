@@ -221,9 +221,9 @@ class IsoAreaAsPointcloudFromLayer(QgsProcessingAlgorithm):
         user_id_field_datatype = getFieldDatatype(origin_points, origin_id_field)
 
         source_point_fields = QgsFields()
-        source_point_fields.append(QgsField('fid', QMetaType.LongLong))
+        source_point_fields.append(QgsField('fid', QMetaType.Type.LongLong))
         source_point_fields.append(QgsField('user_id', user_id_field_datatype))
-        source_point_fields.append(QgsField('type', QMetaType.QString))
+        source_point_fields.append(QgsField('type', QMetaType.Type.QString))
 
         for f in origin_points.getFeatures():
             source_feat = QgsFeature(source_point_fields)
@@ -249,8 +249,8 @@ class IsoAreaAsPointcloudFromLayer(QgsProcessingAlgorithm):
                          defaultDirection)
         
         fields = QgsFields()
-        fields.append(QgsField('vertex_id', QMetaType.LongLong))
-        fields.append(QgsField('cost', QMetaType.Double))
+        fields.append(QgsField('vertex_id', QMetaType.Type.LongLong))
+        fields.append(QgsField('cost', QMetaType.Type.Double))
         fields.append(QgsField('origin_point_id', user_id_field_datatype))
         
         (sink, dest_id) = self.parameterAsSink(parameters, self.OUTPUT, context, fields, Qgis.WkbType.PointM, analysisCrs)

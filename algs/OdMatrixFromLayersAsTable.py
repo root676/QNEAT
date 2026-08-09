@@ -229,9 +229,9 @@ class OdMatrixFromLayersAsTable(QgsProcessingAlgorithm):
              raise QgsProcessingException(f"Coordinate reference system (CRS) of graph is {network.sourceCrs().authid()} and doesn't match up with the CRSs of both, origin ({origin_points.sourceCrs().authid()}) and destination ({destination_points.sourceCrs().authid()}) point layers. Reproject so that the analysis layers CRSs match up.")
         
         o_fields = QgsFields()
-        o_fields.append(QgsField('fid', QMetaType.LongLong))
+        o_fields.append(QgsField('fid', QMetaType.Type.LongLong))
         o_fields.append(QgsField('user_id', getFieldDatatype(origin_points, origin_id_field)))
-        o_fields.append(QgsField('type', QMetaType.QString))
+        o_fields.append(QgsField('type', QMetaType.Type.QString))
 
         #unpack all points into one list
         input_point_features: list[QgsFeature] = []
@@ -246,9 +246,9 @@ class OdMatrixFromLayersAsTable(QgsProcessingAlgorithm):
             input_point_features.append(of)
         
         d_fields = QgsFields()
-        d_fields.append(QgsField('fid', QMetaType.LongLong))
+        d_fields.append(QgsField('fid', QMetaType.Type.LongLong))
         d_fields.append(QgsField('user_id', getFieldDatatype(destination_points, destination_id_field)))
-        d_fields.append(QgsField('type', QMetaType.QString))
+        d_fields.append(QgsField('type', QMetaType.Type.QString))
 
         for f in destination_points.getFeatures():
             df = QgsFeature(d_fields)

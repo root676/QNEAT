@@ -221,9 +221,9 @@ class IsoAreaAsPointcloudFromPoint(QgsProcessingAlgorithm):
                          defaultDirection)
         
         fields = QgsFields()
-        fields.append(QgsField('vertex_id', QMetaType.LongLong))
-        fields.append(QgsField('cost', QMetaType.Double))
-        fields.append(QgsField('origin_point_id', QMetaType.LongLong))
+        fields.append(QgsField('vertex_id', QMetaType.Type.LongLong))
+        fields.append(QgsField('cost', QMetaType.Type.Double))
+        fields.append(QgsField('origin_point_id', QMetaType.Type.LongLong))
         
         (sink, dest_id) = self.parameterAsSink(parameters, self.OUTPUT, context, fields, Qgis.WkbType.PointM, analysisCrs)
 
