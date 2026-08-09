@@ -222,7 +222,7 @@ class ShortestPathBetweenPoints(QgsProcessingAlgorithm):
 
         if origin_vertex_id == destination_vertex_id:
             #only output the entry geometries and costs of the two points
-            route_geom: QgsGeometry = origin_analysis_point.graph_entry_geom.union(destination_analysis_point.graph_entry_geom)
+            route_geom: QgsGeometry = origin_analysis_point.graph_entry_geom.combine(destination_analysis_point.graph_entry_geom)
             start_entry_cost: float = origin_analysis_point.graph_entry_cost
             cost_on_graph: float = 0.0
             end_exit_cost: float = destination_analysis_point.graph_entry_cost
