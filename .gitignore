@@ -8,3 +8,4 @@ deploy.sh
 # local QGIS 4 prefix for tests/run_tests.sh
 tests/qgis_prefix.local
 __pycache__/
+dist/
